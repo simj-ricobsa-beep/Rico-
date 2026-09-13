@@ -1,11 +1,14 @@
 name: Scheduled SeaTalk Reminder
 
 on:
-  schedule:
-    # Trigger otomatis menggunakan UTC (02:00 UTC = 09:00 WIB)
-    - cron: '0 2 * * 1-5'
-  
-  # Trigger manual dengan menu pilihan (dropdown)
+  # 1. Mengizinkan trigger otomatis dari cron-job.org via API Webhook
+  repository_dispatch:
+    types:
+      - trigger_reminder1
+      - trigger_reminder2
+      - trigger_reminder3
+
+  # 2. Tetap mempertahankan trigger manual dari halaman GitHub Actions UI (Dropdown)
   workflow_dispatch:
     inputs:
       reminder_type:
@@ -33,13 +36,28 @@ jobs:
       with:
         python-version: '3.11'
 
-    # 3. Jalankan script python dengan argumen input manual / otomatis
+    # 3. Logika penentuan pesan berdasarkan pemicu (UI Manual / cron-job.org)
     - name: Run Reminder Script
       env:
         SEATALK_WEBHOOK_URL: ${{ secrets.SEATALK_WEBHOOK_URL }}
       run: |
-        REMINDER="${{ github.event.inputs.reminder_type }}"
-        if [ -z "$REMINDER" ]; then
-          REMINDER="sop"
+        # 1. Cek apakah dipicu lewat cron-job.org (repository_dispatch)
+        if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+          EVENT_TYPE="${{ github.event.action }}"
+          if [ "$EVENT_TYPE" = "trigger_reminder1" ]; then
+            REMINDER="sop"
+          elif [ "$EVENT_TYPE" = "trigger_reminder2" ]; then
+            REMINDER="absen"
+          elif [ "$EVENT_TYPE" = "trigger_reminder3" ]; then
+            REMINDER="strategi"
+          fi
+        # 2. Cek apakah dipicu lewat tombol UI manual (workflow_dispatch)
+        else
+          REMINDER="${{ github.event.inputs.reminder_type }}"
+          if [ -z "$REMINDER" ]; then
+            REMINDER="sop"
+          fi
         fi
+
+        echo "Mengeksekusi parameter script: python send_reminder.py $REMINDER"
         python send_reminder.py $REMINDER
