@@ -12,7 +12,17 @@ def send_seatalk_reminder():
     payload = {
         "tag": "text",
         "text": {
-            "content": "⏰ isi content menyusul. tunggu yaaa"
+            "content": "⏰ Trand ZT/ SP  :
+1. Masih banyak ditemukan finding ZT Proper content Call beck Date kurang dari +4 hari
+2. Pastikan penginputan tanggal CBD itu +4 hari dan terhitung hari pertama di esok hari 
+3. Pastikan CBL +3 hari untuk case EC confirm yg ada indikasi HC, WPWN
+4. Pastikan setelah tanggal sesuai printah BAIK di klik agar tidak terimput otomatis CBD di esok hari  
+5. Masih banyak ditemukan finding ZT FAKE PTP prolong lebih dari lusa 
+6. penginpuntan tanggal pastikan maksimal lusa ya terhitung dari hari awal call 
+7. double cek sebelum submit CWU pastikan semua tanggal sesuai baik itu yg berhubungan dengan PTP atau dengan CBD 
+8. Selalu edukasi hubungi CS untuk case Hard complain, WPWN, Suspect Froud, Recycle Number 
+9. Untuk Register atau P1 terdapat case Suspect Froud dan Recycle number tambahan edukasi user memiliki tagihan Spaylater atau Spinjam 
+  "
         }
     }
     
