@@ -1,0 +1,31 @@
+name: Scheduled SeaTalk Reminder
+
+on:
+  schedule:
+    # Trigger using UTC time configurations.
+    # Example: '0 2 * * 1-5' executes at 02:00 UTC (9:00 AM WIB) Monday through Friday
+    - cron: '0 2 * * 1-5'
+  
+  # Allows you to manually trigger the workflow from the GitHub "Actions" tab for testing
+  workflow_dispatch:
+
+jobs:
+  trigger-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Pull down the repository files to the runner environment
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 2. Set up Python environment environment 
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # 3. Securely inject the Webhook variable and execute script
+    - name: Run Reminder Script
+      env:
+        SEATALK_WEBHOOK_URL: ${{ secrets.SEATALK_WEBHOOK_URL }}
+      run: python send_reminder.py
