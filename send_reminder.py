@@ -1,0 +1,41 @@
+import os
+import json
+import urllib.request
+
+def send_seatalk_reminder():
+    webhook_url = os.environ.get("SEATALK_WEBHOOK_URL")
+    if not webhook_url:
+        print("Error: SEATALK_WEBHOOK_URL environment variable is missing.")
+        return
+
+    # Use a clean, universally accepted text payload structure
+    payload = {
+        "tag": "text",
+        "text": {
+            "content": "⏰ isi content menyusul. tunggu yaaa"
+        }
+    }
+    
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        webhook_url, 
+        data=data, 
+        headers={'Content-Type': 'application/json'}
+    )
+    
+    try:
+        with urllib.request.urlopen(req) as response:
+            status = response.getcode()
+            response_body = response.read().decode('utf-8')
+            
+            print(f"HTTP Status Code: {status}")
+            print(f"SeaTalk Server Response: {response_body}")
+            
+            # Most chat APIs return JSON response error codes here
+            if status == 200:
+                print("Webhook connection completed successfully.")
+    except Exception as e:
+        print(f"An execution error occurred: {e}")
+
+if __name__ == "__main__":
+    send_seatalk_reminder()
