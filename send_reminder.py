@@ -5,10 +5,11 @@ import urllib.request
 import urllib.error
 
 # ==========================================
-# 1. ISI TEXT REMINDER
+# 1. ISI TEXT REMINDER (DENGAN MENTION ALL)
 # ==========================================
 
-MESSAGE_SOP = """⏰ Trand ZT/ SP:
+# Pengingat 1: SOP Operasional
+MESSAGE_SOP = """<mention-all/> ⏰ Trand ZT/ SP:
 
 1. Masih banyak ditemukan finding ZT Proper content Call beck Date kurang dari +4 hari.
 2. Pastikan penginputan tanggal CBD itu +4 hari dan terhitung hari pertama di esok hari.
@@ -21,7 +22,8 @@ MESSAGE_SOP = """⏰ Trand ZT/ SP:
 9. Untuk Register atau P1 terdapat case Suspect Fraud dan Recycle Number, tambahan edukasi user memiliki tagihan SPayLater atau SPinjam.
 """
 
-MESSAGE_ABSEN = """⏰ Reminder Harian Team:
+# Pengingat 2: Kedisiplinan & Rutinitas
+MESSAGE_ABSEN = """<mention-all/> ⏰ Reminder Harian Team:
 
 - Jangan lupa absen login dan logout perhari
 - Kumpulin Hp jangan lupa 
@@ -31,7 +33,8 @@ MESSAGE_ABSEN = """⏰ Reminder Harian Team:
 - Atribut lanyard selalu dipakai diarea kantor
 """
 
-MESSAGE_STRATEGI = """💡 Strategi daily :
+# Pengingat 3: Strategi Harian (Daily Strategy)
+MESSAGE_STRATEGI = """<mention-all/> 💡 Strategi daily :
 
 1. Register 100 K 
 2. Mainkan amount LM terlebih dahulu sampai jam 10 pagi 
@@ -58,10 +61,12 @@ def send_seatalk_reminder(message_content):
             "Pastikan sudah diset di GitHub Actions Secret."
         )
 
+    # Ganti tag teks biasa menjadi format text dengan dukungan mention
     payload = {
         "tag": "text",
         "text": {
-            "content": message_content
+            "content": message_content,
+            "at_all": True  # Parameter tambahan untuk memastikan mention all aktif di SeaTalk
         }
     }
 
