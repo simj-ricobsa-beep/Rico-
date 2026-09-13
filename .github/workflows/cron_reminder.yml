@@ -34,14 +34,20 @@ jobs:
       with:
         python-version: '3.11'
 
-    # 3. Securely inject the Webhook variable and execute script
-    # Jika dijalankan manual, dia mengambil pilihan dari input. Jika otomatis (cron), default ke 'sop'.
+    # 3. Membersihkan teks crontab dari file python dan menjalankan script
     - name: Run Reminder Script
       env:
         SEATALK_WEBHOOK_URL: ${{ secrets.SEATALK_WEBHOOK_URL }}
       run: |
+        # Otomatis menghapus baris teks crontab yang tidak sengaja masuk di file .py agar tidak bikin SyntaxError
+        sed -i '/[0-9]* [0-9]* \* \* \*/d' send_reminder.py
+        sed -i '/SEATALK_WEBHOOK_URL=/d' send_reminder.py
+        
+        # Menentukan jenis reminder yang dipilih
         REMINDER="${{ github.event.inputs.reminder_type }}"
         if [ -z "$REMINDER" ]; then
           REMINDER="sop"
         fi
+        
+        # Jalankan script python dengan argumen yang bersih
         python send_reminder.py $REMINDER
