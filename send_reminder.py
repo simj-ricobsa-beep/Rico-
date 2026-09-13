@@ -9,7 +9,7 @@ import urllib.error
 # ==========================================
 
 # Pengingat 1: SOP Operasional
-MESSAGE_SOP = """<mention-all/> ⏰ Trand ZT/ SP:
+MESSAGE_SOP = """ ⏰ Trand ZT/ SP:
 
 1. Masih banyak ditemukan finding ZT Proper content Call beck Date kurang dari +4 hari.
 2. Pastikan penginputan tanggal CBD itu +4 hari dan terhitung hari pertama di esok hari.
@@ -23,7 +23,7 @@ MESSAGE_SOP = """<mention-all/> ⏰ Trand ZT/ SP:
 """
 
 # Pengingat 2: Kedisiplinan & Rutinitas
-MESSAGE_ABSEN = """<mention-all/> ⏰ Reminder Harian Team:
+MESSAGE_ABSEN = """ ⏰ Reminder Harian Team:
 
 - Jangan lupa absen login dan logout perhari
 - Kumpulin Hp jangan lupa 
@@ -34,7 +34,7 @@ MESSAGE_ABSEN = """<mention-all/> ⏰ Reminder Harian Team:
 """
 
 # Pengingat 3: Strategi Harian (Daily Strategy)
-MESSAGE_STRATEGI = """<mention-all/> 💡 Strategi daily :
+MESSAGE_STRATEGI = """ 💡 Strategi daily :
 
 1. Register 100 K 
 2. Mainkan amount LM terlebih dahulu sampai jam 10 pagi 
