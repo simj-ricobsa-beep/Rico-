@@ -39,7 +39,7 @@ MESSAGE_STRATEGI = """ 💡 Strategi daily :
 1. Register 100 K 
 2. Mainkan amount LM terlebih dahulu sampai jam 10 pagi 
 3. Setelah amount aman baru mulai kejar account star dari jam 10 sampai EOS 
-4. LM ikut aliran data yg banyak di tangga kalian masuk 
+4. LM ikut aliran data yg banyak di tanggal kalian masuk 
 5. Pengulan untuk tagihan kecil LM atau dibawah pickian kalian cukup 1 kali ( hanya mandatori tipsan 1 kali )
 6. pengulangan LM big amount bisa 2 sampai 3 kali atau kejar konversi amountnya 
 7. Wajib diambil jangan dibuang buang datanya 
