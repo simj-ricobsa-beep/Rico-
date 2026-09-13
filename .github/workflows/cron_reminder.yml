@@ -3,7 +3,6 @@ name: Scheduled SeaTalk Reminder
 on:
   schedule:
     # Trigger otomatis menggunakan UTC (02:00 UTC = 09:00 WIB)
-    # Secara default, trigger otomatis ini akan mengirimkan reminder SOP
     - cron: '0 2 * * 1-5'
   
   # Trigger manual dengan menu pilihan (dropdown)
@@ -34,20 +33,13 @@ jobs:
       with:
         python-version: '3.11'
 
-    # 3. Membersihkan teks crontab dari file python dan menjalankan script
+    # 3. Jalankan script python dengan argumen input manual / otomatis
     - name: Run Reminder Script
       env:
         SEATALK_WEBHOOK_URL: ${{ secrets.SEATALK_WEBHOOK_URL }}
       run: |
-        # Otomatis menghapus baris teks crontab yang tidak sengaja masuk di file .py agar tidak bikin SyntaxError
-        sed -i '/[0-9]* [0-9]* \* \* \*/d' send_reminder.py
-        sed -i '/SEATALK_WEBHOOK_URL=/d' send_reminder.py
-        
-        # Menentukan jenis reminder yang dipilih
         REMINDER="${{ github.event.inputs.reminder_type }}"
         if [ -z "$REMINDER" ]; then
           REMINDER="sop"
         fi
-        
-        # Jalankan script python dengan argumen yang bersih
         python send_reminder.py $REMINDER
