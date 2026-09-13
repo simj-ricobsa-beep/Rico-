@@ -2,12 +2,22 @@ name: Scheduled SeaTalk Reminder
 
 on:
   schedule:
-    # Trigger using UTC time configurations.
-    # Example: '0 2 * * 1-5' executes at 02:00 UTC (9:00 AM WIB) Monday through Friday
+    # Trigger otomatis menggunakan UTC (02:00 UTC = 09:00 WIB)
+    # Secara default, trigger otomatis ini akan mengirimkan reminder SOP
     - cron: '0 2 * * 1-5'
   
-  # Allows you to manually trigger the workflow from the GitHub "Actions" tab for testing
+  # Trigger manual dengan menu pilihan (dropdown)
   workflow_dispatch:
+    inputs:
+      reminder_type:
+        description: 'Pilih jenis reminder yang ingin dikirim:'
+        required: true
+        default: 'sop'
+        type: choice
+        options:
+          - sop
+          - absen
+          - strategi
 
 jobs:
   trigger-bot:
@@ -18,14 +28,20 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # 2. Set up Python environment environment 
+    # 2. Set up Python environment
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
     # 3. Securely inject the Webhook variable and execute script
+    # Jika dijalankan manual, dia mengambil pilihan dari input. Jika otomatis (cron), default ke 'sop'.
     - name: Run Reminder Script
       env:
         SEATALK_WEBHOOK_URL: ${{ secrets.SEATALK_WEBHOOK_URL }}
-      run: python send_reminder.py
+      run: |
+        REMINDER="${{ github.event.inputs.reminder_type }}"
+        if [ -z "$REMINDER" ]; then
+          REMINDER="sop"
+        fi
+        python send_reminder.py $REMINDER
