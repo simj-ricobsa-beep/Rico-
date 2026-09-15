@@ -7,6 +7,7 @@ on:
       - trigger_reminder1
       - trigger_reminder2
       - trigger_reminder3
+      - trigger_reminder4
 
   # 2. Tetap mempertahankan trigger manual dari halaman GitHub Actions UI (Dropdown)
   workflow_dispatch:
@@ -20,6 +21,7 @@ on:
           - sop
           - absen
           - strategi
+          - flow_call
 
 jobs:
   trigger-bot:
@@ -50,6 +52,8 @@ jobs:
             REMINDER="absen"
           elif [ "$EVENT_TYPE" = "trigger_reminder3" ]; then
             REMINDER="strategi"
+          elif [ "$EVENT_TYPE" = "trigger_reminder4" ]; then
+            REMINDER="flow_call"
           fi
         # 2. Cek apakah dipicu lewat tombol UI manual (workflow_dispatch)
         else
