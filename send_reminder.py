@@ -47,6 +47,24 @@ MESSAGE_STRATEGI = """ 💡 Strategi daily :
 9. untuk strategi yg siang dan jika ada perubahan strategi aku bakal send manual
 """
 
+# Pengingat 4: Alur Follow Up Call
+MESSAGE_FLOW_CALL = """ 📞 Flow FU Call :
+
+- Per percobaan call 6 Kali Ringing 
+- S7 : Star FU dari data H0, H2,H1
+- S14: Star dari H2,H1 dan di jam 17:00 H0 
+- Sentuh all data H0 nya
+- H2 dan H1 cukup call data di atas 500 Ribu 
+- Setelah semua hari tersentuh Lakukan pengulangan percobaan call di data H0 Sebanyak 2 kali lagi, bisa main priority amount dari 500 up dengan ringing 4 X
+
+Note :
+H0 : Data Today 
+H1: Data Kemarin 
+H2: Data last date PTP ( data yg akan broken )
+
+Semangat guyss 🚀
+"""
+
 
 # ==========================================
 # 2. FUNGSI UTAMA PENGIRIMAN
@@ -61,12 +79,11 @@ def send_seatalk_reminder(message_content):
             "Pastikan sudah diset di GitHub Actions Secret."
         )
 
-    # Ganti tag teks biasa menjadi format text dengan dukungan mention
     payload = {
         "tag": "text",
         "text": {
             "content": message_content,
-            "at_all": True  # Parameter tambahan untuk memastikan mention all aktif di SeaTalk
+            "at_all": True  # Memastikan fitur mention @all aktif di SeaTalk
         }
     }
 
@@ -127,9 +144,12 @@ if __name__ == "__main__":
     elif argument == "strategi":
         print("Mengeksekusi Reminder Ke-3 (Strategi Daily)...")
         send_seatalk_reminder(MESSAGE_STRATEGI)
+    elif argument == "flow_call":
+        print("Mengeksekusi Reminder Ke-4 (Flow FU Call)...")
+        send_seatalk_reminder(MESSAGE_FLOW_CALL)
     elif argument == "sop":
         print("Mengeksekusi Reminder Ke-1 (SOP Operasional)...")
         send_seatalk_reminder(MESSAGE_SOP)
     else:
-        print(f"⚠️ Argumen '{argument}' tidak dikenal. Pilih 'sop', 'absen', atau 'strategi'.")
+        print(f"⚠️ Argumen '{argument}' tidak dikenal. Pilih 'sop', 'absen', 'strategi', atau 'flow_call'.")
         sys.exit(1)
